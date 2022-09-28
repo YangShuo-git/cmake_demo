@@ -32,6 +32,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 add_subdirectory(demo_thread)
 include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
 
+add_subdirectory(demo_file)
+
 aux_source_directory(. DIR_SRCS)
 
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
