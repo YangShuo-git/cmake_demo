@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(DEMO VERSION 1.0.0.0)
+project(demo VERSION 1.0.0.0)
 
 message(STATUS "......CMAKE_PROJECT_NAME    = ${CMAKE_PROJECT_NAME}")
 message(STATUS "......PROJECT_VERSION_MAJOR = ${PROJECT_VERSION_MAJOR}")
@@ -29,13 +29,18 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
+# 增加子目录
 add_subdirectory(demo_thread)
 include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
 
 add_subdirectory(demo_file)
 
+add_subdirectory(demo_beforeMain)
+
+# 源文件
 aux_source_directory(. DIR_SRCS)
 
+#增加可执行程序
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
 target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
 

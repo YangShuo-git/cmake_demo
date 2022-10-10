@@ -2,6 +2,10 @@ if [ "-d" build ]; then
     rm  -rf build
 fi
 
+if [ struct_file ]; then
+    rm struct_file
+fi
+
 mkdir build
 
 cd build
