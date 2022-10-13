@@ -10,7 +10,14 @@
  * 5、for循环 范围for语句
  *    一个容器只要其内部支持begin和end成员函数用于返回一个迭代器，能够指向容器的第一个元素和末端元素的后面；
  *    这种容器就支持范围for语句。
- * 6、new/delete   与malloc/free的区别
+ * 6、new/delete   与malloc/free的区别；
+ *    new 类型标识符
+ *    new 类型标识符(初始值)
+ *    new 类型标识符[内存单元个数]；开辟一个数组
+ *    new不但分配内存，还会做一些初始化工作；delete不但释放内存，还会做一些清理工作。
+ * 
+ * 7、nullptr  对于指针的初始化，能用nullptr就用nullptr;
+ *    NULL nullptr两者的类型是不同的。
  *   
  * 
  */
@@ -25,8 +32,21 @@ void funcRef(int &_a, int &_b)
     _b = 2; 
 }
 
+struct Student
+{
+    char name[95];
+    int number;
+};
+
+void copyStu(Student *stu)
+{
+    stu->number = 33017;
+    strcpy(stu->name, "baiyang");
+}
+
 int main ()
 {
+    //1
     auto a {10};
     int b(20);
     cout << a << " " << b << endl;
@@ -38,13 +58,16 @@ int main ()
     funcRef(a, b);
     cout << a << " " << b << endl;
 
+    //2
     int arrA[] {1,2,3};
-    int arrB[] = {11,5,6};
+    int arrB[] = {7,5,6};
     for (auto &i : arrA)
     {
-        cout << i << endl;
+        cout << i << endl;   // 1 2 3 
+        //cout << arrA[i] << endl; // 2 3 7  这两者的区别？
     }
 
+    //3-1
     char *point = nullptr;
     point = (char *)malloc(sizeof(char)*100);
     cout << sizeof("hello world!") << endl;
@@ -52,13 +75,30 @@ int main ()
     cout << point << endl;
     free(point);
 
-    int *pInt = (int*)malloc(sizeof(int)*100);
-    int *pNew = pInt;
-    *pNew++ = 1;
-    *pNew++ = 5;
-    // *pNew = 5;
-    // *(++pNew) = 1;
-    cout << *pInt << " " << *(pInt+1) << " "<< *(pInt + 2) << endl;
+    //3-2
+    int *myInt1 = new int;
+    int *myInt2 = new int(11);
+    int *myInt3 = new int[12];
+
+    int *pInt3 = myInt3;
+    *pInt3++ = 8;
+    *pInt3++ = 9;
+    // *pInt3 = 8;     //两组是等价的
+    // *(++pInt3) = 9;
+    cout << *myInt3 << " " << *(myInt3 + 1) << endl;
+
+    delete myInt1;
+    delete myInt2;
+    delete[] myInt3;  // myInt3是new出来的，而pInt3是在栈区，所以只delete myInt3即可
+
+    //4
+    Student stu;
+    cout << sizeof(Student) << endl;
+    printf("sizeof(Student): %d\n", sizeof(Student));
+    copyStu(&stu);
+    cout << stu.number << endl;
+    cout << stu.name << endl;
+    cout << sizeof(stu) << endl;
 
     return 0;
 }
