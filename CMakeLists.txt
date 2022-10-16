@@ -41,6 +41,8 @@ add_subdirectory(demo_beforeMain)
 
 add_subdirectory(demo_c11)
 
+add_subdirectory(demo_class)
+
 # 源文件
 aux_source_directory(. DIR_SRCS)
 
