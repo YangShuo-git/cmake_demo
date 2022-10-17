@@ -7,6 +7,7 @@ DemoClass::DemoClass()
 
 DemoClass::~DemoClass()
 {
+    // delete m_data[];
 }
 
 DemoClass::DemoClass(int _a)
@@ -30,7 +31,7 @@ DemoClass& DemoClass::operator= (DemoClass &_instance)
     m_data = new int[10];
     memcpy(m_data, _instance.m_data, 10 * sizeof(int));
     cout << "赋值构造函数" << "\n";
-    return *this;
+    return *this;  //可以连等 
 }
 
 int main()
