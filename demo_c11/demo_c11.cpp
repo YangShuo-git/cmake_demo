@@ -21,6 +21,9 @@
  * 8、类和结构体的区别主要有两点：访问级别，继承权限。class都是private，struct都是public。
  * 9、incline函数  解决频繁调用体积很小的函数所造成的系统性能耗费问题
  *    定义在头文件，类似宏展开
+ * 10、容器  优先选择迭代器进行循环遍历;
+ *    迭代器失效；
+ *    push_back()是深拷贝;
  * 、std::function  用于封装一个函数，功能类似于函数指针，但比函数指针方便的多。
  * 、RAII  利用对象生命周期管理资源，智能指针
  * 、原子操作
@@ -32,6 +35,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <vector>
 #include "demo_c11.h"
 using namespace std;
 
@@ -43,7 +47,7 @@ void funRef(int &_a, int &_b)
 
 struct Student
 {
-    char name[95];
+    char name[100];
     int number;
 };
 
@@ -51,6 +55,13 @@ void createOneStu(Student *stu)
 {
     stu->number = 33017;
     strcpy(stu->name, "baiyang");
+}
+
+void testStatic()
+{
+    static int count = 0;  // 为什么每次调用，不再重新赋值为0？
+    count +=3;
+    cout << "count: " << count <<endl;
 }
 
 int main ()
@@ -73,7 +84,7 @@ int main ()
     for (auto &i : arrA)
     {
         cout << i << endl;   // 1 2 3 
-        //cout << arrA[i] << endl; // 2 3 7  这两者的区别？
+        //cout << arrA[i] << endl; // 2 3 7  也会把后面的值打印出来
     }
 
     //3-1
@@ -102,15 +113,40 @@ int main ()
     delete[] myInt3;  // myInt3是new出来的，而pInt3是在栈区，所以只delete myInt3即可
 
     //4
-    cout << "sizeof(Student):" << sizeof(Student) << endl;
+    cout << "sizeof(Student):" << sizeof(Student) << endl; //104
     Student stu;
     createOneStu(&stu);
     cout << stu.number << endl;
     cout << stu.name << endl;
-    cout << "sizeof(stu):" << sizeof(stu) << endl;
-    cout << add(5, 11) << "\n";
+    cout << "sizeof(stu):" << sizeof(stu) << endl;  //104
+    cout << add(5, 11) << "\n";  //16
 
-    //
+    //5
+    vector<int> vec = {100, 200, 300};
+    vector<int>::reverse_iterator iter;
+    iter = vec.rbegin();
+    cout << *iter << "\n";
 
+    vector<Student> vecStu;
+    vecStu.push_back(stu);  
+    vector<Student>::iterator itStu;
+
+    itStu = vecStu.begin();
+    itStu->number = 800;
+    stu.number = 900;
+    cout << itStu->number << endl;
+
+    while (!vec.empty())
+    {
+        auto it = vec.cbegin();
+        vec.erase(it);
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        testStatic();
+    }
+    
+    
     return 0;
 }
