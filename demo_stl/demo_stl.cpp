@@ -7,8 +7,6 @@
  * 
  */
 
-
-
 #include <iostream>
 #include <string.h>
 #include <vector>
@@ -61,21 +59,32 @@ int main ()
         cout << pConent << "\n"; // 100001
     }
     
-    // 需要用vs2019跑一下
     //有new出来的资源，所以需要delete
     //而且这里的delete并没有破坏迭代器，因为没有往容器confList里增加/删除数据，push_back/erase
     //只是删除迭代器里元素指向的由我们自己分配的内存。
     std::vector<conf *>::iterator it;
     for (it = confList.begin(); it != confList.end(); ++it)
     {
-        delete (*it);  //可以理解为 it是指向confList中元素的指针，所以（*it）是取出confList中的元素，即pConfName、pConfID
+        cout << *it << "\n";  // 容器里存放的是指针，即地址
+        cout << (*it)->item << " " << (*it)->content << "\n";
+        delete (*it);  //可以理解为 it是指向confList中元素的指针，所以（*it）是取出confList中的元素，即指针pConfName、pConfID
+        cout << *it << "\n"; 
+        cout << (*it)->item << " " << (*it)->content << "\n";
+        cout << "end while" << "\n";
     }
-
+    //delete 之后，confList并没有空
     if (confList.empty())
     {
         cout << "容器已空！" << "\n";
     }
     
     confList.clear();  //这个要不要都可以，因为容器本身里边的内容，在容器失效后，系统会自动释放 
+    //clear之后，是真的空了
+    for (it = confList.begin(); it != confList.end(); ++it)
+    {
+        cout << *it << "\n";
+        cout << (*it)->item << " " << (*it)->content << "\n";
+    }
+
     return 0;
 }
