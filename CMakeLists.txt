@@ -8,13 +8,13 @@ message(STATUS "......PROJECT_VERSION_MINOR = ${PROJECT_VERSION_MINOR}")
 message(STATUS "......PROJECT_VERSION_PATCH = ${PROJECT_VERSION_PATCH}")
 message(STATUS "......PROJECT_VERSION_TWEAK = ${PROJECT_VERSION_TWEAK}")
 
-message(STATUS "......PROJECT_HOMEPAGE_URL  = ${PROJECT_HOMEPAGE_URL}")           #没有打印出来
-message(STATUS "......CMAKE_PROJECT_DESCRIPTION = ${CMAKE_PROJECT_DESCRIPTION}")  #没有打印出来
+message(STATUS "......PROJECT_HOMEPAGE_URL  = ${PROJECT_HOMEPAGE_URL}")           #没有设置
+message(STATUS "......CMAKE_PROJECT_DESCRIPTION = ${CMAKE_PROJECT_DESCRIPTION}")  #没有设置
 message(STATUS "......PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
 message(STATUS "......PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
 message(STATUS "......operation system: ${CMAKE_SYSTEM}")
 
-#打印系统平台
+#打印当前系统平台
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     MESSAGE(STATUS "current platform: Linux ")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
@@ -33,23 +33,28 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
 # 增加子目录
 add_subdirectory(demo_thread)
+
+# add_subdirectory(demo_file)
+
+# add_subdirectory(demo_beforeMain)
+
+# add_subdirectory(demo_c11)
+
+# add_subdirectory(demo_class)
+
+# add_subdirectory(demo_stl)
+
+add_subdirectory(demo_smartPoint)
+
+# 增加头文件目录
 include_directories(${PROJECT_SOURCE_DIR}/demo_thread)   #这样在main函数中 就可以直接 #include <demo_thread.h>
-
-add_subdirectory(demo_file)
-
-add_subdirectory(demo_beforeMain)
-
-add_subdirectory(demo_c11)
-
-add_subdirectory(demo_class)
-
-add_subdirectory(demo_stl)
 
 # 源文件
 aux_source_directory(. DIR_SRCS)
 
 #增加可执行程序
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
+# 给可执行程序增加链接库
 target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
 
 

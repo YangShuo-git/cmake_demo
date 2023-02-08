@@ -86,5 +86,12 @@ int main ()
         cout << (*it)->item << " " << (*it)->content << "\n";
     }
 
+    cout << 001000 << "\n";
+    cout << 00100 << "\n";
+    cout << 0001 << "\n";
+    cout << (010 << 8) << "\n";
+
+
+
     return 0;
 }
