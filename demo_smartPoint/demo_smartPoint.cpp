@@ -11,6 +11,30 @@
 
 using namespace std;
 
+// 裸指针导致的内存泄漏
+void funcRaw()
+{
+    string *ptr = new string("hello world!");
+    if (true)   
+    {
+        // 当某个条件为真，就return，忘记释放内存导致泄漏
+        return;
+    }
+    delete ptr;
+    return;
+}
+
+// 智能指针解决内存泄漏的问题
+void funcSmart()
+{
+    shared_ptr<string> ptr = make_shared<string>("hello world!");
+    if (true)
+    {
+        return;
+    }
+    return;
+}
+
 class A
 {
 public:
