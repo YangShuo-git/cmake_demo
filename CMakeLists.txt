@@ -47,14 +47,15 @@ add_subdirectory(demo_thread)
 add_subdirectory(demo_smartPoint)
 
 # 增加头文件目录
-include_directories(${PROJECT_SOURCE_DIR}/demo_thread)   #这样在main函数中 就可以直接 #include <demo_thread.h>
+# 这样在main函数中 就可以直接写#include <demo_thread.h>，而不用写上完整的路径
+include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
 
 # 源文件
 aux_source_directory(. DIR_SRCS)
 
 #增加可执行程序
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
-# 给可执行程序增加链接库
+# 给可执行程序添加链接库
 target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
 
 

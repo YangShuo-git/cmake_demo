@@ -1,2 +1,2 @@
 # cmake_demo
-CMakeLists.txt模板，用于测试CMake不同的指令
+CMakeLists.txt模板，用于代码测试
