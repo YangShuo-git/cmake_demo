@@ -44,7 +44,9 @@ add_subdirectory(demo_thread)
 
 # add_subdirectory(demo_stl)
 
-add_subdirectory(demo_smartPoint)
+# add_subdirectory(demo_smartPoint)
+
+add_subdirectory(demo_rvalueRef)
 
 # 增加头文件目录
 # 这样在main函数中 就可以直接写#include <demo_thread.h>，而不用写上完整的路径
