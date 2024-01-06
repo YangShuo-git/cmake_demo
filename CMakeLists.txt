@@ -31,33 +31,63 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
-# 增加子目录
-add_subdirectory(demo_thread)
+# 接受 cmake -D 的传参
+option(demo_test "Enable demo_test" OFF)
+option(demo_stl "Enable demo_stl" OFF)
 
-# add_subdirectory(demo_file)
+# 设置编译开关 将编译的项目置为ON，才会执行add_subdirectory（增加子目录）
+# 已修改为 ./cmake.sh传参的方式，故注释
+# set(demo_test OFF)
+# set(demo_file OFF)
+# set(demo_beforeMain OFF)
+# set(demo_class OFF)
+# set(demo_stl OFF)
+# set(demo_smartPoint OFF)
+# set(demo_rvalueRef OFF)
+# set(demo_thread OFF)
 
-# add_subdirectory(demo_beforeMain)
+if(demo_test)
+    add_subdirectory(demo_test)
+endif()
 
-# add_subdirectory(demo_c11)
+if(demo_file)
+    add_subdirectory(demo_file)
+endif()
 
-# add_subdirectory(demo_class)
+if(demo_beforeMain)
+    add_subdirectory(demo_beforeMain)
+endif()
 
-# add_subdirectory(demo_stl)
+if(demo_class)
+    add_subdirectory(demo_class)
+endif()
 
-# add_subdirectory(demo_smartPoint)
+if(demo_stl)
+    add_subdirectory(demo_stl)
+endif()
 
-add_subdirectory(demo_rvalueRef)
+if(demo_smartPoint)
+    add_subdirectory(demo_smartPoint)
+endif()
 
-# 增加头文件目录
-# 这样在main函数中 就可以直接写#include <demo_thread.h>，而不用写上完整的路径
-include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
+if(demo_thread)
+    add_subdirectory(demo_thread)
 
-# 源文件
+    # 添加头文件目录
+    # 这样在main函数中就不用写绝对路径，可以直接 #include <demo_thread.h>
+    include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
+endif()
+
+
+# 添加源文件
 aux_source_directory(. DIR_SRCS)
 
-#增加可执行程序
+# 最终生成可执行程序（也可以不生成，直接用上面单独的项目生成的可执行程序）
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
-# 给可执行程序添加链接库
-target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
+
+if(demo_thread)
+    # 给可执行程序添加链接库
+    target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
+endif()
 
 

@@ -40,4 +40,9 @@ int main()
     DemoClass dc2(dc1);
     DemoClass dc3 = dc1;
     dc2 = dc3;
+
+    Test test;
+    cout << "test size = " << sizeof(test) << "\n";
+    cout << "Test size = " << sizeof(Test) << "\n";
+
 }
