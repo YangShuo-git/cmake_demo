@@ -31,7 +31,7 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
-# 接受 cmake -D 的传参
+# option来接收 cmake -D 的传参
 option(demo_test "Enable demo_test" OFF)
 option(demo_stl "Enable demo_stl" OFF)
 
