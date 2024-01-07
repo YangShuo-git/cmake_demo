@@ -31,11 +31,13 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
-# option来接收 cmake -D 的传参
-option(demo_test "Enable demo_test" OFF)
-option(demo_stl "Enable demo_stl" OFF)
+##################################################################
 
-# 设置编译开关 将编译的项目置为ON，才会执行add_subdirectory（增加子目录）
+# 1.option来接收 cmake -D 的传参；  不用option也能接收传进来的参数
+# option(demo_test "Enable demo_test" OFF)
+# option(demo_stl "Enable demo_stl" OFF)
+
+# 2.设置编译开关 将编译的项目置为ON，才会执行add_subdirectory（增加子目录）
 # 已修改为 ./cmake.sh传参的方式，故注释
 # set(demo_test OFF)
 # set(demo_file OFF)
@@ -46,6 +48,7 @@ option(demo_stl "Enable demo_stl" OFF)
 # set(demo_rvalueRef OFF)
 # set(demo_thread OFF)
 
+# 3. 直接接收传进来的参数
 if(demo_test)
     add_subdirectory(demo_test)
 endif()

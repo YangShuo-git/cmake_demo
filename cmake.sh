@@ -1,6 +1,6 @@
 #！/bin/bash
-#########################################################################
 
+#########################################################################
 MY_PROJECT="demo_test"
 
 help_echo() {
@@ -39,7 +39,6 @@ exec_function() {
         ;;
     esac
 }
-
 #########################################################################
 
 # 判断 cmake.sh 接收参数的个数
@@ -52,17 +51,17 @@ else
     help_echo
 fi
 
+
+echo "--------------build start--------------"
 # 判断目录是否存在
 if [ -d build ]; then 
     rm -rf build
 fi
-
 # 判断文件是否存在
 if [ -e struct_file ]; then
     rm struct_file
 fi
 
-echo "--------------build start--------------"
 mkdir build
 cd build
 
