@@ -1,9 +1,9 @@
-void function1();
-void function2();
+#include <stdio.h>
 
 int main() {
-    function1(); 
-    function2(); 
 
+    char arr[100] = "1";
+    printf("%c\n", arr[0]);
+    
     return 0;
 }

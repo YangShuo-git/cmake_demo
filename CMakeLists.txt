@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(demo VERSION 1.0.0.0)
+project(CAMKE_DEMO VERSION 1.0.0.0)
 
 #打印project相关信息
 message(STATUS "......CMAKE_PROJECT_NAME    = ${CMAKE_PROJECT_NAME}")
@@ -48,7 +48,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 # set(demo_rvalueRef OFF)
 # set(demo_thread OFF)
 
-# 3. 直接接收传进来的参数
+# 3. 直接接收从cmake.sh传进来的参数
 if(demo_test)
     add_subdirectory(demo_test)
 endif()
