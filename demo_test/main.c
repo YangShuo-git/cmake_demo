@@ -1,9 +1,13 @@
 #include <stdio.h>
 
-int main() {
-
-    char arr[100] = "1";
-    printf("%c\n", arr[0]);
-    
-    return 0;
+void boy_home(int* meipo) {
+	static int boy = 23;
+	meipo = &boy;
+}
+ 
+int main(void) {
+	int* meipo = NULL;
+	boy_home(meipo);
+	printf("%d\n",*meipo);
+	return 0;
 }
