@@ -1,12 +1,11 @@
 #！/bin/bash
 
 #########################################################################
-# 默认传参是 demo_test
-MY_PROJECT="demo_test"
+# 通过选序号的方式来build，类比lunch
+MY_PROJECT=""
 
 help_echo() {
     echo "*********************************************"
-    echo "Default: ./cmake.sh          -----执行test目录"
     echo "Uage: ./cmake.sh [arg]"
     echo "---------------------------------------------"
     echo "arg:"
@@ -15,6 +14,7 @@ help_echo() {
     echo "  ref"
     echo "  stl"   
     echo "*********************************************"
+    exit
 }
 
 exec_function() {
@@ -37,6 +37,7 @@ exec_function() {
         ;;
     *)
         echo -e "\n>> Error param: $1.\n"
+        help_echo
         ;;
     esac
 }
