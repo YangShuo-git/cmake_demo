@@ -13,6 +13,7 @@ help_echo() {
     echo "  sp"
     echo "  ref"
     echo "  stl"   
+    echo "  struct"   
     echo "*********************************************"
     exit
 }
@@ -33,6 +34,10 @@ exec_function() {
         ;;
     "stl")
         MY_PROJECT="demo_stl"
+        echo "exec_function: demo_stl"
+        ;;
+    "struct")
+        MY_PROJECT="demo_struct"
         echo "exec_function: demo_stl"
         ;;
     *)

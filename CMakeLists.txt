@@ -81,6 +81,10 @@ if(demo_thread)
     include_directories(${PROJECT_SOURCE_DIR}/demo_thread)
 endif()
 
+if(demo_struct)
+    add_subdirectory(demo_struct)
+endif()
+
 
 # 添加源文件
 aux_source_directory(. DIR_SRCS)
