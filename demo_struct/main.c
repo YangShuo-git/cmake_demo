@@ -16,6 +16,24 @@ int max(Student* stu)
 	return res;
 }
 
+// 数组是相同元素的集合
+Student students[3] = 
+{
+	{10, "tom", 59},
+	{11, "jerry", 80},
+	{12, "cooper", 100}
+};
+
+float getAve(Student* stu, int n)
+{
+	float ave, sum = 0;
+	for (int i = 0; i < n; i++, stu++)
+	{
+		 sum = sum + stu->score;
+	}
+
+	return sum/n;
+}
  
 int main(void) {
 	// 结构体指针初始化的两种方式
@@ -30,9 +48,12 @@ int main(void) {
 	};
 
 	float res = max(stu1);
-
 	printf("name= %s \n", stu1->name);
 	printf("res= %f, new score= %f \n", res, stu1->score);
+
+
+	float ave = getAve(students, 3);
+	printf("ave= %f \n", ave);
 
 	return 0;
 }
