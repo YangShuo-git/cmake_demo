@@ -33,7 +33,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 
 ##################################################################
 
-# 1.option来接收 cmake -D 的传参；  不用option也能接收传进来的参数
+# 1.option来接收 cmake -D 的传参； 不用option也能接收传进来的参数 故注释
 # option(demo_test "Enable demo_test" OFF)
 # option(demo_stl "Enable demo_stl" OFF)
 
@@ -48,7 +48,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall")
 # set(demo_rvalueRef OFF)
 # set(demo_thread OFF)
 
-# 3. 直接接收从cmake.sh传进来的参数
+# 直接接收从cmake.sh传进来的参数
 if(demo_test)
     add_subdirectory(demo_test)
 endif()
@@ -92,9 +92,9 @@ aux_source_directory(. DIR_SRCS)
 # 最终生成可执行程序（也可以不生成，直接用上面单独的项目生成的可执行程序）
 add_executable(${CMAKE_PROJECT_NAME} ${DIR_SRCS})
 
-if(demo_thread)
-    # 给可执行程序添加链接库
-    target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
-endif()
+# if(demo_thread)
+#     # 给可执行程序添加链接库
+#     target_link_libraries(${CMAKE_PROJECT_NAME} pthread demo_thread)
+# endif()
 
 

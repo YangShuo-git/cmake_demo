@@ -14,6 +14,8 @@ help_echo() {
     echo "  ref"
     echo "  stl"   
     echo "  struct"   
+    echo "  thread"
+    echo "  test"    
     echo "*********************************************"
     exit
 }
@@ -38,7 +40,15 @@ exec_function() {
         ;;
     "struct")
         MY_PROJECT="demo_struct"
-        echo "exec_function: demo_stl"
+        echo "exec_function: demo_struct"
+        ;;
+    "thread")
+        MY_PROJECT="demo_thread"
+        echo "exec_function: demo_thread"
+        ;;
+    "test")
+        MY_PROJECT="demo_test"
+        echo "exec_function: demo_test"
         ;;
     *)
         echo -e "\n>> Error param: $1.\n"
@@ -72,7 +82,7 @@ fi
 mkdir build
 cd build
 
-# 向cmakelist文件传递参数的方式如下
+# 向CMakeLists传递参数的方式如下
 cmake -D$MY_PROJECT=ON ..
 
 make
