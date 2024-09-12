@@ -21,5 +21,5 @@ void helloFive()
 
 void testThreadFunc() {
     std::this_thread::sleep_for(std::chrono::seconds(6));
-    std::cout << "test thread run!" << std::endl; 
+    std::cout << "6s test thread run!" << std::endl; 
 }

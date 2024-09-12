@@ -17,9 +17,7 @@ private:
     std::thread* testThread = nullptr;
 
 public:
-    CTimer() {
-
-    }
+    CTimer() {}
     virtual ~CTimer() {
         if (timeThread)
         {
@@ -36,26 +34,29 @@ public:
     }
 
     void start() {
-        // 类中成员函数起线程的方式
-        // 也可以将类外的函数传进来，这样就不用传this了
+        // 类中成员函数起线程：传类成员函数、传类外函数
         std::cout << "thread start!" << std::endl; 
         timeThread = new std::thread(&CTimer::runThread, this); 
-
         testThread = new std::thread(testThreadFunc); 
     }
 
     void runThread() {
         std::this_thread::sleep_for(std::chrono::seconds(3));
-        std::cout << "time thread run!" << std::endl; 
+        std::cout << "3s time thread run!" << std::endl; 
     }
 
     void join() {
         if (timeThread->joinable())
         {
-            std::cout << "thread join!" << std::endl; 
+            std::cout << "time thread join!" << std::endl; 
             timeThread->join();
+        }
+        if (testThread->joinable())
+        {
+            std::cout << "test thread join!" << std::endl; 
             testThread->join();
         }
+        
     }
 };
 

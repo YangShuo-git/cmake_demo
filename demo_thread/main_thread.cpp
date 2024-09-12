@@ -3,7 +3,6 @@
 
 int main()
 {
-    printf("main function!\n");
 #if 0
     std::thread t2(helloTen);
     std::thread t1(helloFive);
@@ -15,9 +14,14 @@ int main()
         std::this_thread::sleep_for(std::chrono::seconds(10));
     });
 #endif
+
+#if 0
     CTimer timerTest;
     timerTest.start();
     timerTest.join();
+#endif
+
+
 
     return 0;
 }
