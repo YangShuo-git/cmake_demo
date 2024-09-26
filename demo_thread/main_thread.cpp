@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <demo_thread.h>
+#include "threadSamples.h"
 
 int main()
 {
@@ -21,7 +22,9 @@ int main()
     timerTest.join();
 #endif
 
-
+    // DemoResouceConflict();
+    // TestNomalSafeLock();
+    TestSafeSmartlock();
 
     return 0;
 }
