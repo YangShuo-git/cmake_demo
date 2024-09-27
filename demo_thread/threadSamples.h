@@ -3,6 +3,64 @@
 #include <string>
 using namespace std;
 
+/***************************version1 无锁********************************/
+void DannyWrite(string &blackboard)
+{
+    blackboard =+ "My";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard += " name";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard +=" is";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard += " Danny\n";
+}
+void PeterWrite(string& blackboard)
+{
+    blackboard +="My";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard += " name";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard +=" is";
+    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
+    blackboard += " Peter\n";
+}
+void DemoResouceConflict()
+{
+    string blackboard;
+    thread DannyThread(DannyWrite, std::ref(blackboard));
+    thread PeterThread(PeterWrite, std::ref(blackboard));
+    DannyThread.join();
+    PeterThread.join();
+    cout<<blackboard<<endl;
+}
+/***************************version1********************************/
+
+
+/***************************version2 智能锁********************************/
+void PeterWriteWithMutex(mutex& amutex, string& blackboard )
+{
+    unique_lock<std::mutex> lk(amutex);
+    PeterWrite(blackboard);
+}
+void DannywriteWithMutex(mutex& amutex, string& blackboard)
+{
+    unique_lock<std::mutex> lk(amutex);
+    DannyWrite(blackboard);
+}
+void TestNomalSafeLock()
+{
+    string blackboard;
+    std::mutex amutex;
+    thread DannyThread(DannywriteWithMutex, std::ref(amutex), std::ref(blackboard));
+    thread PeterThread(PeterWriteWithMutex, std::ref(amutex), std::ref(blackboard));
+    DannyThread.join();
+    PeterThread.join();
+    cout<<blackboard<<endl;
+}
+/***************************version2********************************/
+
+
+/***************************version3 保险箱********************************/
 template <typename T>
 class MutexSafe
 {
@@ -49,64 +107,6 @@ public:
     }
 };
 
-/***************************version 1********************************/
-void DannyWrite(string &blackboard)
-{
-    blackboard =+ "My";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard += " name";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard +=" is";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard += " Danny\n";
-}
-void PeterWrite(string& blackboard)
-{
-    blackboard +="My";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard += " name";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard +=" is";
-    this_thread::sleep_for(std::chrono::milliseconds(rand()%3));
-    blackboard += " Peter\n";
-}
-void DemoResouceConflict()
-{
-    string blackboard;
-    thread DannyThread(DannyWrite, std::ref(blackboard));
-    thread PeterThread(PeterWrite, std::ref(blackboard));
-    DannyThread.join();
-    PeterThread.join();
-    cout<<blackboard<<endl;
-}
-/***************************version 1********************************/
-
-
-/***************************version 2********************************/
-void PeterWriteWithMutex(mutex& amutex, string& blackboard )
-{
-    unique_lock<std::mutex> lk(amutex);
-    PeterWrite(blackboard);
-}
-void DannywriteWithMutex(mutex& amutex, string& blackboard)
-{
-    unique_lock<std::mutex> lk(amutex);
-    DannyWrite(blackboard);
-}
-void TestNomalSafeLock()
-{
-    string blackboard;
-    std::mutex amutex;
-    thread DannyThread(DannywriteWithMutex, std::ref(amutex), std::ref(blackboard));
-    thread PeterThread(PeterWriteWithMutex, std::ref(amutex), std::ref(blackboard));
-    DannyThread.join();
-    PeterThread.join();
-    cout<<blackboard<<endl;
-}
-/***************************version 2********************************/
-
-
-/***************************version 3********************************/
 typedef MutexSafe<string>  Safe;
 void SafeDannyWrite(Safe& safe)
 {
@@ -123,7 +123,7 @@ void SafePeterWrite(Safe& safe)
 void TestSafeSmartlock()
 {
     Safe safe(new string());
-    thread DannyThread(SafeDannyWrite,ref(safe));
+    thread DannyThread(SafeDannyWrite, ref(safe));
     thread PeterThread(SafePeterWrite, ref(safe));
     DannyThread.join();
     PeterThread.join();
@@ -131,4 +131,4 @@ void TestSafeSmartlock()
     string& blackboard = safe.Acquire(lock);
     cout<<blackboard<<endl;
 }
-/***************************version 3********************************/
+/***************************version3********************************/
