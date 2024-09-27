@@ -88,7 +88,7 @@ public:
     
     // 它要求传入的 lock 参数是 safe 对象本身, 能避免任意锁都可以访问资源的问题。
     // 此外，还要求锁与 Acquire 的 Safe 类型相同。
-    T& Acquire (unique_lock<MutexSafe<T>>& lock)
+    T& Acquire(unique_lock<MutexSafe<T>>& lock)
     {
         MutexSafe<T> *_safe = lock.mutex();
         if(&_safe->Mutex()!=&_mutex)
@@ -97,7 +97,7 @@ public:
         }
         return *_resource;
     }
-    T& Acquire (unique_lock<mutex>& lock)
+    T& Acquire(unique_lock<mutex>& lock)
     {
         if(lock.mutex()!=&_mutex)
         {
