@@ -61,6 +61,7 @@ void TestNomalSafeLock()
 
 
 /***************************version3 保险箱********************************/
+// 通过保险箱来管理资源，避免不同互斥锁对象之间的资源竞争和错误访问
 template <typename T>
 class MutexSafe
 {
@@ -86,8 +87,10 @@ public:
         return _mutex;
     }
     
-    // 它要求传入的 lock 参数是 safe 对象本身, 能避免任意锁都可以访问资源的问题。
-    // 此外，还要求锁与 Acquire 的 Safe 类型相同。
+    // 要求传入的 lock 参数是 safe 对象本身, 能避免任意锁都可以访问资源的问题
+    // 强迫传入lock，不然会有version2的问题
+    // 通过传入特定类型的unique_lock对象，可以确保只有持有正确互斥锁的对象才能访问资源
+    // 避免不同互斥锁对象之间的资源竞争和错误访问
     T& Acquire(unique_lock<MutexSafe<T>>& lock)
     {
         MutexSafe<T> *_safe = lock.mutex();
@@ -123,10 +126,12 @@ void SafePeterWrite(Safe& safe)
 void TestSafeSmartlock()
 {
     Safe safe(new string());
+
     thread DannyThread(SafeDannyWrite, ref(safe));
     thread PeterThread(SafePeterWrite, ref(safe));
     DannyThread.join();
     PeterThread.join();
+
     unique_lock<Safe> lock(safe);
     string& blackboard = safe.Acquire(lock);
     cout<<blackboard<<endl;
