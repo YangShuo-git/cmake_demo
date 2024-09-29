@@ -49,6 +49,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "stdio.h": "c",
-        "member_variable.h": "c"
+        "member_variable.h": "c",
+        "condition_variable": "cpp",
+        "mutex": "cpp"
     }
 }

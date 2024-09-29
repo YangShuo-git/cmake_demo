@@ -1,11 +1,9 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include <mutex>
 #include <condition_variable>
-#include "threadSamples.h"
+#include "mutexSafe.h"
 using namespace std;
-
 
 struct StockBlackboard
 {
@@ -14,7 +12,6 @@ struct StockBlackboard
 
     StockBlackboard(const string stockName, float stockPrice=0):name(stockName),price(stockPrice){}
 };
-
 
 typedef MutexSafe<StockBlackboard> StockSafe;
 void PeterUpdateStock_Notify (StockSafe& safe, condition_variable& condition)
@@ -31,7 +28,7 @@ void PeterUpdateStock_Notify (StockSafe& safe, condition_variable& condition)
             cout<<"Peter udpated the price to $"<<stock.price<<endl;
             if(stock.price>90)
             {
-                lock.unlock();
+                lock.unlock(); // unlock的原因：通知Danny线程时，需要解锁，这样Danny线程才有机会获得并上锁
                 cout<<"Peter notified Danny at price $"<<stock.price<<", ";
                 condition.notify_one();
                 // sleep的原因：当生产者通知消费者后，可能需要一些时间来确保消费者线程已经进入阻塞状态并准备好接收数据
@@ -46,7 +43,7 @@ void DannyWait_ReadStock(StockSafe & safe, condition_variable& priceCondition)
 {
     cout<<"Danny is waiting for the right price to sell..."<<endl;
     unique_lock<mutex> lock(safe.Mutex());
-    priceCondition.wait(lock);
+    priceCondition.wait(lock); // 先解锁，然后sleep，被唤醒后立即上锁
 
     StockBlackboard& stock= safe.Acquire(lock);
     if(stock.price>90)
