@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <demo_thread.h>
-#include "threadSamples.h"
+#include "conditionVariableSample.h"
 
 int main()
 {
@@ -24,7 +24,9 @@ int main()
 
     // DemoResouceConflict();
     // TestNomalSafeLock();
-    TestSafeSmartlock();
+    // TestSafeSmartlock();
+
+    TestConditionVariable();
 
     return 0;
 }
