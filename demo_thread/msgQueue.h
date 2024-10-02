@@ -2,8 +2,7 @@
 #define _MSGQUEUE_H_
 
 // 任何时候，只能有一个线程访问这个消息队列
-// 消息队列空了，消费者被阻塞
-// 满了，生产者被阻塞
+// 队列满了，生产者被阻塞；队列空了，消费者被阻塞
 
 #include <queue>
 #include <mutex>
@@ -46,6 +45,7 @@ public:
         _enqCv.notify_one();
         return msg;
     }
+    
     int Size()
     {
         unique_lock<mutex> lock(_mutex);
